@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kelly.servicecontenttest" >
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -17,6 +20,27 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="com.radiusnetworks.ibeacon.service.IBeaconService"
+            android:enabled="true"
+            android:exported="true"
+            android:isolatedProcess="false"
+            android:label="iBeacon" >
+        </service>
+        <service
+            android:name="com.radiusnetworks.ibeacon.IBeaconIntentProcessor"
+            android:enabled="true"
+            android:exported="true"
+            android:isolatedProcess="false" >
+            <meta-data
+                android:name="background"
+                android:value="true" />
+
+            <intent-filter android:priority="1" >
+                <action android:name="com.radiusnetwork.demo.DID_RANGING" />
+                <action android:name="com.radiusnetwork.demo.DID_MONITORING" />
+            </intent-filter>
+        </service>
         <service
             android:name=".MyService"
             android:enabled="true"
